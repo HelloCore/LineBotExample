@@ -30,7 +30,7 @@ public class LineBotExampleApplication {
 
 	@EventMapping
     public TextMessage handleTextMessageEvent(MessageEvent<TextMessageContent> event) {    	
-    	senderIDSet.add(event.getSource().getUserId());
+    	senderIDSet.add(event.getSource().getSenderId());
         return new TextMessage("You say:"+event.getMessage().getText());
     }
 
