@@ -1,5 +1,8 @@
 package com.github.hellocore;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,7 +20,7 @@ public class LineBotCustomController {
     
 	@RequestMapping("/echo")
 	public void echo(@RequestParam String message){
-		String[] listSender = (String[]) LineBotExampleApplication.getSenderIDSet().toArray();
+		List<String> listSender = new ArrayList<String>(LineBotExampleApplication.getSenderIDSet());
 		for (String string : listSender) {
 			lineMessagingClient.pushMessage(new PushMessage(string, new TextMessage(message)));
 		}
