@@ -1,5 +1,8 @@
 package com.github.hellocore;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -18,12 +21,16 @@ public class LineBotExampleApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(LineBotExampleApplication.class, args);
 	}
-	
-	private static String senderId;
+		
+	private static Set<String> senderIDSet = new HashSet<>();
 
-    @EventMapping
-    public TextMessage handleTextMessageEvent(MessageEvent<TextMessageContent> event) {
-    	setSenderId(event.getSource().getUserId());
+    public static Set<String> getSenderIDSet() {
+		return senderIDSet;
+	}
+
+	@EventMapping
+    public TextMessage handleTextMessageEvent(MessageEvent<TextMessageContent> event) {    	
+    	senderIDSet.add(event.getSource().getUserId());
         return new TextMessage("You say:"+event.getMessage().getText());
     }
 
@@ -31,12 +38,5 @@ public class LineBotExampleApplication {
     public void handleDefaultMessageEvent(Event event) {
         System.out.println("event: " + event);
     }
-
-	public static String getSenderId() {
-		return senderId;
-	}
-
-	public static void setSenderId(String senderId) {
-		LineBotExampleApplication.senderId = senderId;
-	}
+    
 }

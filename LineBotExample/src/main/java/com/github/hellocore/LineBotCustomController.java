@@ -17,8 +17,9 @@ public class LineBotCustomController {
     
 	@RequestMapping("/echo")
 	public void echo(@RequestParam String message){
-		if(LineBotExampleApplication.getSenderId() != null){
-			lineMessagingClient.pushMessage(new PushMessage(LineBotExampleApplication.getSenderId(), new TextMessage(message)));
+		String[] listSender = (String[]) LineBotExampleApplication.getSenderIDSet().toArray();
+		for (String string : listSender) {
+			lineMessagingClient.pushMessage(new PushMessage(string, new TextMessage(message)));
 		}
 	}
 }
