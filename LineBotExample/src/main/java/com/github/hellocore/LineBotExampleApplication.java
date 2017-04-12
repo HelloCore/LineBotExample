@@ -34,9 +34,11 @@ public class LineBotExampleApplication {
 	}
 
 	@EventMapping
-    public TextMessage handleTextMessageEvent(MessageEvent<TextMessageContent> event) {
-		userRepository.saveUser(new User(event.getSource().getSenderId()));
-        return new TextMessage("You say:"+event.getMessage().getText());
+    public void handleTextMessageEvent(MessageEvent<TextMessageContent> event) {
+		
+		userRepository.saveUser(new User(event.getSource().getUserId()));
+		System.out.println("USER:"+ event.getSource().getUserId());
+//        return new TextMessage("You say:"+event.getMessage().getText());
     }
 
     @EventMapping
@@ -45,9 +47,9 @@ public class LineBotExampleApplication {
     }
     
     @EventMapping
-    public ReplyMessage handlerJoinGroup(JoinEvent event) {
+    public void handlerJoinGroup(JoinEvent event) {
     	groupRepository.saveGroup(new Group(event.getSource().getSenderId()));
-    	return new ReplyMessage(event.getReplyToken(), new TextMessage("Hello World!!!"));
+    	System.out.println("GROUP:"+event.getSource().getSenderId());
     }
     
 }

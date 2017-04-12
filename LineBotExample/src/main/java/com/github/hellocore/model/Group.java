@@ -2,6 +2,8 @@ package com.github.hellocore.model;
 
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Group implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
@@ -16,7 +18,7 @@ public class Group implements Serializable {
 		this.groupId = groupId;
 	}
 
-	public Group(String groupId) {
+	public Group(@JsonProperty("groupId") String groupId) {
 		super();
 		this.groupId = groupId;
 	}	
