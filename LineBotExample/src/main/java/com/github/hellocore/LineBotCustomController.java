@@ -3,9 +3,11 @@ package com.github.hellocore;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.github.hellocore.model.Group;
 import com.github.hellocore.model.User;
@@ -28,6 +30,7 @@ public class LineBotCustomController {
 	private GroupRepository groupRepository;
     
 	@RequestMapping("/echo")
+	@ResponseStatus(value = HttpStatus.OK)
 	public void echo(@RequestParam String message){
 		List<User> listSender = userRepository.listUser();
 		for (User user : listSender) {
@@ -37,6 +40,7 @@ public class LineBotCustomController {
 	
 
 	@RequestMapping("/GroupEcho")
+	@ResponseStatus(value = HttpStatus.OK)
 	public void groupEcho(@RequestParam String message){
 		List<Group> listGroup = groupRepository.listGroup();
 		for (Group group : listGroup) {
