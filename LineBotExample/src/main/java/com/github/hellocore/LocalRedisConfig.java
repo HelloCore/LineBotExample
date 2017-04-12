@@ -9,7 +9,6 @@ import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 
 import com.github.hellocore.model.User;
 
-import jnr.ffi.types.clock_t;
 import redis.clients.jedis.JedisPoolConfig;
 
 @Configuration
