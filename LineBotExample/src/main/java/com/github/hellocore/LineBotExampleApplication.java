@@ -1,11 +1,11 @@
 package com.github.hellocore;
 
-import java.util.HashSet;
-import java.util.Set;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import com.github.hellocore.model.User;
+import com.github.hellocore.repository.UserRepository;
 import com.linecorp.bot.model.event.Event;
 import com.linecorp.bot.model.event.MessageEvent;
 import com.linecorp.bot.model.event.message.TextMessageContent;
@@ -18,19 +18,16 @@ import com.linecorp.bot.spring.boot.annotation.LineMessageHandler;
 public class LineBotExampleApplication {
 
 
+	@Autowired
+	private UserRepository userRepository;
+	
 	public static void main(String[] args) {
 		SpringApplication.run(LineBotExampleApplication.class, args);
 	}
-		
-	private static Set<String> senderIDSet = new HashSet<>();
-
-    public static Set<String> getSenderIDSet() {
-		return senderIDSet;
-	}
 
 	@EventMapping
-    public TextMessage handleTextMessageEvent(MessageEvent<TextMessageContent> event) {    	
-    	senderIDSet.add(event.getSource().getSenderId());
+    public TextMessage handleTextMessageEvent(MessageEvent<TextMessageContent> event) {
+		userRepository.saveUser(new User(event.getSource().getSenderId()));
         return new TextMessage("You say:"+event.getMessage().getText());
     }
 
