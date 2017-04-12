@@ -39,7 +39,7 @@ public class LineBotCustomController {
 	}
 	
 
-	@RequestMapping("/GroupEcho")
+	@RequestMapping("/groupEcho")
 	@ResponseStatus(value = HttpStatus.OK)
 	public void groupEcho(@RequestParam String message){
 		List<Group> listGroup = groupRepository.listGroup();
