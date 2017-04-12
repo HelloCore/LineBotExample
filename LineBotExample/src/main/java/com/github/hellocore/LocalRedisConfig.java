@@ -50,8 +50,8 @@ public class LocalRedisConfig {
     }
     
     @Bean 
-    public RedisTemplate<String, User> groupTemplate(JedisConnectionFactory jedisConnectionFactory) {
-    	RedisTemplate<String, User> groupTemplate = new RedisTemplate<>();
+    public RedisTemplate<String, Group> groupTemplate(JedisConnectionFactory jedisConnectionFactory) {
+    	RedisTemplate<String, Group> groupTemplate = new RedisTemplate<>();
     	Jackson2JsonRedisSerializer<Group> serializer = new Jackson2JsonRedisSerializer<>(Group.class);
     	groupTemplate.setConnectionFactory(jedisConnectionFactory);
     	groupTemplate.setHashValueSerializer(serializer);
