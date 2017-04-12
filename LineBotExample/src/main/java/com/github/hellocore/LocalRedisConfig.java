@@ -1,5 +1,8 @@
 package com.github.hellocore;
 
+import java.net.URI;
+import java.net.URISyntaxException;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
@@ -8,13 +11,14 @@ import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 
 import com.github.hellocore.model.User;
 
+import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 
 @Configuration
 public class LocalRedisConfig {
-
     @Bean
-    public JedisConnectionFactory jedisConnectionFactory(){
+    public JedisConnectionFactory jedisConnectionFactory() throws URISyntaxException{
+       URI redisURI = new URI(System.getenv("REDIS_URL"));
        JedisPoolConfig poolConfig = new JedisPoolConfig();
        poolConfig.setMaxTotal(10);
        poolConfig.setMinIdle(1);
@@ -23,6 +27,9 @@ public class LocalRedisConfig {
        poolConfig.setTestOnReturn(true);
        poolConfig.setTestWhileIdle(true);
        JedisConnectionFactory jedisConnectionFactory = new JedisConnectionFactory(poolConfig);
+       jedisConnectionFactory.setHostName(redisURI.getHost());
+       jedisConnectionFactory.setPort(redisURI.getPort());
+       jedisConnectionFactory.setUsePool(true);
        return jedisConnectionFactory;
     }
 
