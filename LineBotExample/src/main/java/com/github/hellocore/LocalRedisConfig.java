@@ -11,27 +11,16 @@ import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 
 import com.github.hellocore.model.User;
 
-import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
+import redis.clients.jedis.Protocol;
 
 @Configuration
 public class LocalRedisConfig {
 
-	public static JedisPool getJedisPool() throws URISyntaxException {
-	  URI redisURI = new URI(System.getenv("REDIS_URL"));
-	  JedisPoolConfig poolConfig = new JedisPoolConfig();
-	  poolConfig.setMaxTotal(10);
-	  poolConfig.setMaxIdle(5);
-	  poolConfig.setMinIdle(1);
-	  poolConfig.setTestOnBorrow(true);
-	  poolConfig.setTestOnReturn(true);
-	  poolConfig.setTestWhileIdle(true);
-	  JedisPool pool = new JedisPool(poolConfig, redisURI);
-	  return pool;
-	}
 
     @Bean
     public JedisConnectionFactory jedisConnectionFactory() throws URISyntaxException{
+       URI redisUri = new URI(System.getenv("REDIS_URL"));
        JedisPoolConfig poolConfig = new JedisPoolConfig();
        poolConfig.setMaxTotal(10);
        poolConfig.setMinIdle(1);
@@ -40,6 +29,10 @@ public class LocalRedisConfig {
        poolConfig.setTestOnReturn(true);
        poolConfig.setTestWhileIdle(true);
        JedisConnectionFactory jedisConnectionFactory = new JedisConnectionFactory(poolConfig);
+       jedisConnectionFactory.setHostName(redisUri.getHost());
+       jedisConnectionFactory.setPort(redisUri.getPort());
+       jedisConnectionFactory.setTimeout(Protocol.DEFAULT_TIMEOUT);
+       jedisConnectionFactory.setPassword(redisUri.getUserInfo().split(":",2)[1]);
        return jedisConnectionFactory;
     }
 
