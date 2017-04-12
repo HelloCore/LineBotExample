@@ -8,10 +8,12 @@ import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.stereotype.Repository;
 
 import com.github.hellocore.model.Group;
 import com.github.hellocore.repository.GroupRepository;
 
+@Repository
 public class GroupRepositoryImpl implements GroupRepository{
 
     private static final String KEY = "Group";
