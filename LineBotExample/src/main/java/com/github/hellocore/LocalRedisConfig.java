@@ -42,8 +42,6 @@ public class LocalRedisConfig {
     	RedisTemplate<String, User> userTemplate = new RedisTemplate<>();
     	Jackson2JsonRedisSerializer<User> serializer = new Jackson2JsonRedisSerializer<>(User.class);
     	userTemplate.setConnectionFactory(jedisConnectionFactory);
-    	userTemplate.setDefaultSerializer(serializer);
-    	userTemplate.setHashKeySerializer(serializer);
     	userTemplate.setHashValueSerializer(serializer);
         userTemplate.afterPropertiesSet();
 

@@ -2,6 +2,8 @@ package com.github.hellocore.model;
 
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class User implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
@@ -16,8 +18,9 @@ public class User implements Serializable {
 		this.userId = userId;
 	}
 
-	public User(String userId) {
+	public User(@JsonProperty("userId") String userId) {
 		super();
 		this.userId = userId;
 	}
+	
 }
