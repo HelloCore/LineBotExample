@@ -18,14 +18,15 @@ public class UserRepositoryImpl implements UserRepository {
 
     private static final String KEY = "User";
     
+    @Autowired
     private RedisTemplate<String, User> userTemplate;
     
     private HashOperations<String, String, User> hashOps = null;
     
-    @Autowired
-    private UserRepositoryImpl(RedisTemplate<String, User> userTemplate) {
-    	this.userTemplate = userTemplate;
-	}
+//    @Autowired
+//    private UserRepositoryImpl(RedisTemplate<String, User> userTemplate) {
+//    	this.userTemplate = userTemplate;
+//	}
 
     @PostConstruct
     private void init() {
