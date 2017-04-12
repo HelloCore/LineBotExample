@@ -23,11 +23,6 @@ public class UserRepositoryImpl implements UserRepository {
     
     private HashOperations<String, String, User> hashOps = null;
     
-//    @Autowired
-//    private UserRepositoryImpl(RedisTemplate<String, User> userTemplate) {
-//    	this.userTemplate = userTemplate;
-//	}
-
     @PostConstruct
     private void init() {
         hashOps = userTemplate.opsForHash();

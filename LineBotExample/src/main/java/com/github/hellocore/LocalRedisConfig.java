@@ -9,6 +9,7 @@ import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 
+import com.github.hellocore.model.Group;
 import com.github.hellocore.model.User;
 
 import redis.clients.jedis.JedisPoolConfig;
@@ -46,6 +47,17 @@ public class LocalRedisConfig {
         userTemplate.afterPropertiesSet();
 
         return userTemplate;
+    }
+    
+    @Bean 
+    public RedisTemplate<String, User> groupTemplate(JedisConnectionFactory jedisConnectionFactory) {
+    	RedisTemplate<String, User> groupTemplate = new RedisTemplate<>();
+    	Jackson2JsonRedisSerializer<Group> serializer = new Jackson2JsonRedisSerializer<>(Group.class);
+    	groupTemplate.setConnectionFactory(jedisConnectionFactory);
+    	groupTemplate.setHashValueSerializer(serializer);
+    	groupTemplate.afterPropertiesSet();
+
+        return groupTemplate;
     }
 
 }

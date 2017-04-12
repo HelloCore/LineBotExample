@@ -14,5 +14,12 @@ public class Group implements Serializable {
 
 	public void setGroupId(String groupId) {
 		this.groupId = groupId;
+	}
+
+	public Group(String groupId) {
+		super();
+		this.groupId = groupId;
 	}	
+	
+	
 }
