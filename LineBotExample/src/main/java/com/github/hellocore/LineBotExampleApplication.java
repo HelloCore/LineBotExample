@@ -36,7 +36,13 @@ public class LineBotExampleApplication {
 	@EventMapping
     public void handleTextMessageEvent(MessageEvent<TextMessageContent> event) {
 		
-		userRepository.saveUser(new User(event.getSource().getUserId()));
+		if(event.getSource().getUserId() != null){
+			// user
+			userRepository.saveUser(new User(event.getSource().getUserId()));
+		}else{
+			// group
+	    	groupRepository.saveGroup(new Group(event.getSource().getSenderId()));						
+		}
 		System.out.println("USER-0: "+event.getSource().getSenderId());
 		System.out.println("USER-1: "+event.getSource().getUserId());
 //        return new TextMessage("You say:"+event.getMessage().getText());
