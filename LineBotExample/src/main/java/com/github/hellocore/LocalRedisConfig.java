@@ -16,9 +16,22 @@ import redis.clients.jedis.JedisPoolConfig;
 
 @Configuration
 public class LocalRedisConfig {
+
+	public static JedisPool getJedisPool() throws URISyntaxException {
+	  URI redisURI = new URI(System.getenv("REDIS_URL"));
+	  JedisPoolConfig poolConfig = new JedisPoolConfig();
+	  poolConfig.setMaxTotal(10);
+	  poolConfig.setMaxIdle(5);
+	  poolConfig.setMinIdle(1);
+	  poolConfig.setTestOnBorrow(true);
+	  poolConfig.setTestOnReturn(true);
+	  poolConfig.setTestWhileIdle(true);
+	  JedisPool pool = new JedisPool(poolConfig, redisURI);
+	  return pool;
+	}
+
     @Bean
     public JedisConnectionFactory jedisConnectionFactory() throws URISyntaxException{
-       URI redisURI = new URI(System.getenv("REDIS_URL"));
        JedisPoolConfig poolConfig = new JedisPoolConfig();
        poolConfig.setMaxTotal(10);
        poolConfig.setMinIdle(1);
@@ -27,9 +40,6 @@ public class LocalRedisConfig {
        poolConfig.setTestOnReturn(true);
        poolConfig.setTestWhileIdle(true);
        JedisConnectionFactory jedisConnectionFactory = new JedisConnectionFactory(poolConfig);
-       jedisConnectionFactory.setHostName(redisURI.getHost());
-       jedisConnectionFactory.setPort(redisURI.getPort());
-       jedisConnectionFactory.setUsePool(true);
        return jedisConnectionFactory;
     }
 
