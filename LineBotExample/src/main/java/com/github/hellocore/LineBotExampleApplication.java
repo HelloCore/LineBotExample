@@ -30,6 +30,7 @@ public class LineBotExampleApplication {
 	
 	public static void main(String[] args) {
 		SpringApplication.run(LineBotExampleApplication.class, args);
+		
 	}
 
 	@EventMapping
