@@ -24,7 +24,7 @@ public class LocalRedisConfig {
        URI redisUri = new URI(System.getenv("REDIS_URL"));
        JedisPoolConfig poolConfig = new JedisPoolConfig();
        poolConfig.setMaxTotal(10);
-       poolConfig.setMinIdle(1);
+       poolConfig.setMinIdle(2);
        poolConfig.setMaxIdle(5);
        poolConfig.setTestOnBorrow(true);
        poolConfig.setTestOnReturn(true);
